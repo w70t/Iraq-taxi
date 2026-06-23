@@ -49,7 +49,7 @@ final class LocationService: NSObject, ObservableObject {
 extension LocationService: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
-        if isSharing, authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
+        if isSharing && (authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways) {
             manager.startUpdatingLocation()
         } else if authorizationStatus == .denied || authorizationStatus == .restricted {
             isSharing = false
