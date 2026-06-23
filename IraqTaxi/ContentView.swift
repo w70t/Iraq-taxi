@@ -7,6 +7,7 @@ struct ContentView: View {
     @State private var selectedCar = 0
     @State private var isRequesting = false
     @State private var roadOffset: CGFloat = -80
+    @StateObject private var locationService = LocationService()
 
     private var arabic: Bool { language == "ar" }
     private var cars: [CarType] {
@@ -26,6 +27,7 @@ struct ContentView: View {
                 VStack(spacing: 20) {
                     header
                     pickupCard
+                    locationSharingCard
                     destinationCard
                     carChooser
                     requestButton
@@ -84,6 +86,24 @@ struct ContentView: View {
         .padding(16).background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 22))
     }
 
+    private var locationSharingCard: some View {
+        Toggle(isOn: Binding(
+            get: { locationService.isSharing },
+            set: { locationService.setSharing($0) }
+        )) {
+            VStack(alignment: arabic ? .trailing : .leading, spacing: 3) {
+                Text(arabic ? "مشاركة موقعي للرحلة" : "Share my location for this ride")
+                    .fontWeight(.semibold)
+                Text(arabic ? "يتوقف التحديث عند إلغاء الطلب أو إيقاف الزر." : "Updates stop when you cancel or turn this off.")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.62))
+            }
+        }
+        .tint(.green)
+        .padding(16)
+        .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 20))
+    }
+
     private var destinationCard: some View {
         HStack(spacing: 14) {
             Image(systemName: "magnifyingglass").foregroundStyle(.orange)
@@ -124,7 +144,10 @@ struct ContentView: View {
     }
 
     private var requestButton: some View {
-        Button { isRequesting = true } label: {
+        Button {
+            locationService.requestCurrentLocation()
+            isRequesting = true
+        } label: {
             HStack {
                 Image(systemName: "bolt.fill")
                 Text(arabic ? "اطلب \(cars[selectedCar].name) الآن" : "Request \(cars[selectedCar].name) now")
