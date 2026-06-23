@@ -193,5 +193,6 @@ private struct CarType {
 
 #Preview {
     ContentView(language: "ar", setLanguage: { _ in })
+        .environmentObject(RideStore())
         .environment(\.layoutDirection, .rightToLeft)
 }
