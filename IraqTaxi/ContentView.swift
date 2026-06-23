@@ -3,6 +3,7 @@ import SwiftUI
 struct ContentView: View {
     let language: String
     let setLanguage: (String) -> Void
+    @EnvironmentObject private var rides: RideStore
     @State private var destination = ""
     @State private var selectedCar = 0
     @State private var isRequesting = false
@@ -146,6 +147,11 @@ struct ContentView: View {
     private var requestButton: some View {
         Button {
             locationService.requestCurrentLocation()
+            rides.requestRide(
+                destination: destination,
+                vehicleName: cars[selectedCar].name,
+                fare: [5_000, 8_000, 12_000][selectedCar]
+            )
             isRequesting = true
         } label: {
             HStack {
