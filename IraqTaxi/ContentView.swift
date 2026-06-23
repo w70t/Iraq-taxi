@@ -49,9 +49,9 @@ struct ContentView: View {
     private var header: some View {
         HStack {
             VStack(alignment: arabic ? .trailing : .leading, spacing: 5) {
-                Text(arabic ? "إلى أين نأخذك؟" : "Where are we taking you?")
+                Text(arabic ? "أهلاً بك في تكسي واحد عراق" : "Welcome to Taxi One Iraq")
                     .font(.system(size: 28, weight: .bold, design: .rounded))
-                Text(arabic ? "سيارة قريبة منك في كل العراق" : "A ride near you, across Iraq")
+                Text(arabic ? "رحلة آمنة في جميع محافظات العراق" : "Safe rides across every Iraqi governorate")
                     .foregroundStyle(.white.opacity(0.65))
             }
             Spacer()
