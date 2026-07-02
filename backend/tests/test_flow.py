@@ -3,7 +3,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-os.environ["DATABASE_URL"] = "sqlite:///./test_taxi.db"
+os.environ.setdefault("DATABASE_URL", "sqlite:///./test_taxi.db")  # CI overrides with PostgreSQL
 os.environ["SECRET_KEY"] = "test-secret"
 os.environ["ADMIN_TOKEN"] = "admin-test-token"
 

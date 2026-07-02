@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from sqlalchemy import text
 
@@ -6,19 +8,31 @@ from .routers import admin, auth, complaints, drivers, payments, trips
 from .security import decode_token
 from .ws import manager
 
-Base.metadata.create_all(engine)
+# SQLite (dev and tests) gets its schema directly; PostgreSQL and anything
+# else in production is managed by Alembic — run `alembic upgrade head`
+# (the production compose stack does this automatically on startup).
+if engine.dialect.name == "sqlite":
+    Base.metadata.create_all(engine)
+    # Lightweight patch for dev databases created before the commission column.
+    with engine.begin() as connection:
+        try:
+            connection.execute(text("ALTER TABLE trips ADD COLUMN commission INTEGER DEFAULT 0"))
+        except Exception:
+            pass  # column already exists
 
-# Lightweight migration for databases created before the commission column.
-with engine.begin() as connection:
-    try:
-        connection.execute(text("ALTER TABLE trips ADD COLUMN commission INTEGER DEFAULT 0"))
-    except Exception:
-        pass  # column already exists
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    await manager.start()  # Redis fan-out when REDIS_URL is set, else no-op
+    yield
+    await manager.stop()
+
 
 app = FastAPI(
     title="Taxi One Iraq API",
-    version="0.2.0",
+    version="0.3.0",
     description="Backend for the Taxi One Iraq rider and driver apps.",
+    lifespan=lifespan,
 )
 
 app.include_router(admin.router)
