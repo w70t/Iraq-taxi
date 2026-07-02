@@ -223,6 +223,77 @@ def test_admin_controls_fees(rider, driver):
     assert response.json()["commission"] == 2000
 
 
+def test_complaints_and_admin_resolution(driver):
+    admin = {"X-Admin-Token": "admin-test-token"}
+    driver_headers = auth(driver["access_token"])
+
+    response = client.post(
+        "/complaints", json={"text": "الزبون ألغى بعد وصولي"}, headers=driver_headers
+    )
+    assert response.status_code == 201
+    complaint = response.json()
+    assert complaint["status"] == "open"
+
+    # Driver sees it in their own list
+    response = client.get("/complaints/mine", headers=driver_headers)
+    assert any(c["id"] == complaint["id"] for c in response.json())
+
+    # Admin sees it and resolves it
+    response = client.get("/admin/complaints", headers=admin)
+    assert any(c["id"] == complaint["id"] for c in response.json())
+
+    response = client.post(f"/admin/complaints/{complaint['id']}/resolve", headers=admin)
+    assert response.status_code == 200 and response.json()["status"] == "resolved"
+
+
+def test_admin_stats_and_driver_management(driver):
+    admin = {"X-Admin-Token": "admin-test-token"}
+
+    stats = client.get("/admin/stats", headers=admin).json()
+    assert stats["trips_completed"] >= 2
+    assert stats["revenue_total"] > 0
+    assert "cash" in stats["payments_by_method"]
+
+    drivers = client.get("/admin/drivers", headers=admin).json()
+    assert drivers and drivers[0]["trips_completed"] >= 1
+    driver_id = drivers[0]["id"]
+
+    # Suspend then re-approve; suspension also forces the driver offline
+    response = client.post(f"/admin/drivers/{driver_id}/approve", json={"approved": False}, headers=admin)
+    assert response.json()["approved"] is False
+    response = client.post(
+        "/drivers/status", json={"online": True}, headers=auth(driver["access_token"])
+    )
+    assert response.status_code == 403  # suspended drivers cannot go online
+    client.post(f"/admin/drivers/{driver_id}/approve", json={"approved": True}, headers=admin)
+
+
+def test_admin_edits_incentive_plans(driver):
+    admin = {"X-Admin-Token": "admin-test-token"}
+    response = client.put(
+        "/admin/settings",
+        json={"incentive_plans": [{
+            "title": "خطة الجمعة",
+            "description": "مكافآت مضاعفة",
+            "steps": [{"trips": 2, "bonus": 3000}, {"trips": 5, "bonus": 9000}],
+        }]},
+        headers=admin,
+    )
+    assert response.status_code == 200
+
+    body = client.get("/drivers/incentives", headers=auth(driver["access_token"])).json()
+    assert body["plans"][0]["title"] == "خطة الجمعة"
+    assert body["plans"][0]["steps"][0] == {"trips": 2, "bonus": 3000}
+
+    # Invalid plans rejected
+    response = client.put(
+        "/admin/settings",
+        json={"incentive_plans": [{"title": "", "steps": []}]},
+        headers=admin,
+    )
+    assert response.status_code == 400
+
+
 def test_role_separation(rider):
     rider_headers = auth(rider["access_token"])
     response = client.post("/drivers/status", json={"online": True}, headers=rider_headers)

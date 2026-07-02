@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -25,6 +26,7 @@ import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -50,6 +52,15 @@ private val CardColor = Color.White.copy(alpha = 0.08f)
 fun DriverAccountScreen(vm: DriverViewModel) {
     val ui by vm.ui.collectAsStateWithLifecycle()
     var server by rememberSaveable { mutableStateOf(ui.serverUrl) }
+    var complaintText by rememberSaveable { mutableStateOf("") }
+
+    LaunchedEffect(Unit) { vm.loadComplaints() }
+    LaunchedEffect(ui.complaintSent) {
+        if (ui.complaintSent) {
+            complaintText = ""
+            vm.clearComplaintSent()
+        }
+    }
 
     Column(
         Modifier
@@ -93,6 +104,54 @@ fun DriverAccountScreen(vm: DriverViewModel) {
             )
             TextButton(onClick = { vm.setServer(server) }) {
                 Text(stringResource(R.string.save), color = TaxiOrange)
+            }
+        }
+
+        SectionCard(stringResource(R.string.support_section)) {
+            OutlinedTextField(
+                value = complaintText,
+                onValueChange = { complaintText = it },
+                label = { Text(stringResource(R.string.complaint_hint)) },
+                minLines = 2,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = TaxiOrange,
+                    unfocusedBorderColor = Color.White.copy(alpha = 0.3f),
+                    focusedLabelColor = TaxiOrange,
+                    unfocusedLabelColor = Color.White.copy(alpha = 0.5f),
+                    cursorColor = TaxiOrange,
+                ),
+                modifier = Modifier.fillMaxWidth(),
+            )
+            TextButton(
+                onClick = { vm.submitComplaint(complaintText) },
+                enabled = complaintText.trim().length >= 3 && !ui.busy,
+            ) {
+                Icon(
+                    Icons.Filled.SupportAgent,
+                    contentDescription = null,
+                    tint = TaxiOrange,
+                    modifier = Modifier.size(18.dp),
+                )
+                Text("  " + stringResource(R.string.send_complaint), color = TaxiOrange)
+            }
+            ui.complaints.forEach { complaint ->
+                Column {
+                    Text(
+                        complaint.text,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White,
+                    )
+                    Text(
+                        stringResource(
+                            if (complaint.status == "resolved") R.string.complaint_resolved
+                            else R.string.complaint_open
+                        ),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (complaint.status == "resolved") SafeGreen else TaxiOrange,
+                    )
+                }
             }
         }
 

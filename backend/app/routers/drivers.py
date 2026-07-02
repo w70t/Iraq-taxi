@@ -1,12 +1,10 @@
-import json
-
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from .. import config
 from ..db import get_db
 from ..fares import haversine_km
 from ..models import DriverProfile, Trip, User, now
+from ..settings_store import get_settings
 from ..schemas import LocationUpdate, OnlineUpdate
 from ..security import require_role
 from ..serializers import trip_dict
@@ -110,7 +108,7 @@ def incentives(
         )
         .count()
     )
-    plans = json.loads(config.INCENTIVE_PLANS)
+    plans = get_settings(db)["incentive_plans"]
     seconds_remaining = 86400 - (now_ts % 86400)
     for plan in plans:
         plan["seconds_remaining"] = seconds_remaining
