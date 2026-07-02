@@ -44,6 +44,8 @@ class RideViewModel(application: Application) : AndroidViewModel(application) {
             status = RideStatus.DRIVER_ARRIVING,
             driverName = DEMO_DRIVER_NAME,
             driverCar = DEMO_DRIVER_CAR,
+            driverPlate = DEMO_DRIVER_PLATE,
+            driverColor = DEMO_DRIVER_COLOR,
         )
         persist()
     }
@@ -98,6 +100,8 @@ class RideViewModel(application: Application) : AndroidViewModel(application) {
     private companion object {
         const val KEY_RIDES = "rides"
         const val DEMO_DRIVER_NAME = "علي كريم"
-        const val DEMO_DRIVER_CAR = "Toyota Corolla · 27 أ ب 1234"
+        const val DEMO_DRIVER_CAR = "Toyota Corolla 2020"
+        const val DEMO_DRIVER_PLATE = "27 أ 1234"
+        const val DEMO_DRIVER_COLOR = "#E8E8E8"
     }
 }

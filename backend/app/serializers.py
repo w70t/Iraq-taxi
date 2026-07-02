@@ -25,6 +25,8 @@ def trip_dict(trip: Trip, db: Session) -> dict:
                 "name": driver.name,
                 "car_model": profile.car_model if profile else "",
                 "plate": profile.plate if profile else "",
+                "car_color": profile.car_color if profile else "",
+                "photo": profile.photo if profile else "",
                 "lat": profile.last_lat if profile else None,
                 "lng": profile.last_lng if profile else None,
             }

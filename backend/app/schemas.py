@@ -30,6 +30,7 @@ class OnlineUpdate(BaseModel):
     online: bool
     car_model: str = ""
     plate: str = ""
+    car_color: str = ""
 
 
 class PaymentInit(BaseModel):

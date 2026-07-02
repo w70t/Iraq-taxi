@@ -8,12 +8,17 @@ from .ws import manager
 
 Base.metadata.create_all(engine)
 
-# Lightweight migration for databases created before the commission column.
+# Lightweight migrations for databases created before newer columns.
 with engine.begin() as connection:
-    try:
-        connection.execute(text("ALTER TABLE trips ADD COLUMN commission INTEGER DEFAULT 0"))
-    except Exception:
-        pass  # column already exists
+    for statement in (
+        "ALTER TABLE trips ADD COLUMN commission INTEGER DEFAULT 0",
+        "ALTER TABLE driver_profiles ADD COLUMN car_color VARCHAR DEFAULT ''",
+        "ALTER TABLE driver_profiles ADD COLUMN photo VARCHAR DEFAULT ''",
+    ):
+        try:
+            connection.execute(text(statement))
+        except Exception:
+            pass  # column already exists
 
 app = FastAPI(
     title="Taxi One Iraq API",

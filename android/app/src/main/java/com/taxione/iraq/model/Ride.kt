@@ -34,6 +34,8 @@ data class Ride(
     val createdAt: Long = System.currentTimeMillis(),
     val driverName: String? = null,
     val driverCar: String? = null,
+    val driverPlate: String? = null,
+    val driverColor: String? = null,  // hex #RRGGBB
 ) {
     fun toJson(): JSONObject = JSONObject().apply {
         put("id", id)
@@ -45,6 +47,8 @@ data class Ride(
         put("createdAt", createdAt)
         driverName?.let { put("driverName", it) }
         driverCar?.let { put("driverCar", it) }
+        driverPlate?.let { put("driverPlate", it) }
+        driverColor?.let { put("driverColor", it) }
     }
 
     companion object {
@@ -60,6 +64,8 @@ data class Ride(
             createdAt = json.optLong("createdAt", System.currentTimeMillis()),
             driverName = json.optString("driverName").ifEmpty { null },
             driverCar = json.optString("driverCar").ifEmpty { null },
+            driverPlate = json.optString("driverPlate").ifEmpty { null },
+            driverColor = json.optString("driverColor").ifEmpty { null },
         )
     }
 }

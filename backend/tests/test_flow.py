@@ -268,6 +268,34 @@ def test_admin_stats_and_driver_management(driver):
     client.post(f"/admin/drivers/{driver_id}/approve", json={"approved": True}, headers=admin)
 
 
+def test_admin_edits_driver_profile(driver, rider):
+    admin = {"X-Admin-Token": "admin-test-token"}
+    driver_id = client.get("/admin/drivers", headers=admin).json()[0]["id"]
+
+    response = client.put(
+        f"/admin/drivers/{driver_id}",
+        json={
+            "car_model": "Hyundai Elantra 2022",
+            "plate": "13 ب 5566",
+            "car_color": "#C0C0C0",
+            "photo": "data:image/jpeg;base64,/9j/dGVzdA==",
+        },
+        headers=admin,
+    )
+    assert response.status_code == 200
+
+    # Rejected: bad color and non-image photo
+    assert client.put(f"/admin/drivers/{driver_id}", json={"car_color": "silver"}, headers=admin).status_code == 400
+    assert client.put(f"/admin/drivers/{driver_id}", json={"photo": "http://x/y.jpg"}, headers=admin).status_code == 400
+
+    # The rider sees the full profile on their trip history entries
+    history = client.get("/trips/history", headers=auth(rider["access_token"])).json()
+    with_driver = next(t for t in history if t["driver"])
+    assert with_driver["driver"]["car_color"] == "#C0C0C0"
+    assert with_driver["driver"]["plate"] == "13 ب 5566"
+    assert with_driver["driver"]["photo"].startswith("data:image/")
+
+
 def test_admin_edits_incentive_plans(driver):
     admin = {"X-Admin-Token": "admin-test-token"}
     response = client.put(

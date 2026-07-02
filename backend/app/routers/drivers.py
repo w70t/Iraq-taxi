@@ -36,6 +36,8 @@ def set_status(
         profile.car_model = body.car_model
     if body.plate:
         profile.plate = body.plate
+    if body.car_color:
+        profile.car_color = body.car_color
     db.commit()
     return {"online": profile.is_online}
 

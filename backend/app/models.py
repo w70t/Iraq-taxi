@@ -32,6 +32,8 @@ class DriverProfile(Base):
     user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), primary_key=True)
     car_model: Mapped[str] = mapped_column(String, default="")
     plate: Mapped[str] = mapped_column(String, default="")
+    car_color: Mapped[str] = mapped_column(String, default="")  # hex e.g. #FFFFFF
+    photo: Mapped[str] = mapped_column(String, default="")      # data:image/... URL
     approved: Mapped[bool] = mapped_column(Boolean, default=False)
     is_online: Mapped[bool] = mapped_column(Boolean, default=False)
     last_lat: Mapped[float | None] = mapped_column(Float, nullable=True)

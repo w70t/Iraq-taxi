@@ -6,6 +6,8 @@ data class DriverInfo(
     val name: String,
     val carModel: String,
     val plate: String,
+    val carColor: String,
+    val photo: String,
     val lat: Double?,
     val lng: Double?,
 )
@@ -50,6 +52,8 @@ data class TripDto(
                         name = it.optString("name"),
                         carModel = it.optString("car_model"),
                         plate = it.optString("plate"),
+                        carColor = it.optString("car_color"),
+                        photo = it.optString("photo"),
                         lat = it.optDouble("lat").takeIf { v -> !v.isNaN() },
                         lng = it.optDouble("lng").takeIf { v -> !v.isNaN() },
                     )

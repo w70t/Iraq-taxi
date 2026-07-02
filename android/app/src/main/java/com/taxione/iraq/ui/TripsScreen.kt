@@ -1,21 +1,25 @@
 package com.taxione.iraq.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsCar
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -32,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.taxione.iraq.R
 import com.taxione.iraq.data.RideViewModel
@@ -156,20 +161,8 @@ private fun RideActions(ride: Ride, rides: RideViewModel) {
             }
 
             RideStatus.DRIVER_ASSIGNED, RideStatus.DRIVER_ARRIVING -> {
-                if (ride.driverName != null && ride.driverCar != null) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            Icons.Filled.Person,
-                            contentDescription = null,
-                            tint = TaxiOrange,
-                            modifier = Modifier.size(18.dp),
-                        )
-                        Spacer(Modifier.size(8.dp))
-                        Text(
-                            "${ride.driverName} · ${ride.driverCar}",
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
+                if (ride.driverName != null) {
+                    DriverProfileRow(ride)
                 }
                 ActionButton(stringResource(R.string.start_ride)) { rides.startRide() }
             }
@@ -180,6 +173,90 @@ private fun RideActions(ride: Ride, rides: RideViewModel) {
 
             else -> Unit
         }
+    }
+}
+
+/** The rider's view of who is coming: avatar, name, car with its real color, and plate. */
+@Composable
+private fun DriverProfileRow(ride: Ride) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.White.copy(alpha = 0.06f))
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        // Photo placeholder: the driver's photo replaces this once the live
+        // trip system is connected; until then a monogram keeps it personal.
+        Box(
+            Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .background(Color(0xFF1D2F4C))
+                .border(2.dp, TaxiOrange.copy(alpha = 0.6f), CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text(
+                ride.driverName?.trim()?.firstOrNull()?.toString() ?: "؟",
+                color = TaxiOrange,
+                fontWeight = FontWeight.Bold,
+                fontSize = 20.sp,
+            )
+        }
+        Column(Modifier.weight(1f)) {
+            Text(ride.driverName.orEmpty(), fontWeight = FontWeight.Bold)
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+            ) {
+                ride.driverColor?.let { hex ->
+                    val carColor = runCatching {
+                        Color(android.graphics.Color.parseColor(hex))
+                    }.getOrDefault(Color.Gray)
+                    Box(
+                        Modifier
+                            .size(13.dp)
+                            .clip(RoundedCornerShape(4.dp))
+                            .background(carColor)
+                            .border(1.dp, Color.White.copy(alpha = 0.4f), RoundedCornerShape(4.dp))
+                    )
+                }
+                Text(
+                    ride.driverCar.orEmpty(),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.White.copy(alpha = 0.7f),
+                )
+            }
+        }
+        ride.driverPlate?.let { PlateChip(it) }
+    }
+}
+
+/** Iraqi-style licence plate chip: light body with a red side band. */
+@Composable
+private fun PlateChip(plate: String) {
+    Row(
+        Modifier.clip(RoundedCornerShape(6.dp)),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            Modifier
+                .width(6.dp)
+                .height(30.dp)
+                .background(Color(0xFFD64545))
+        )
+        Text(
+            plate,
+            color = Color(0xFF111111),
+            fontWeight = FontWeight.Bold,
+            fontSize = 13.sp,
+            modifier = Modifier
+                .background(Color(0xFFF4F4F4))
+                .height(30.dp)
+                .padding(horizontal = 9.dp, vertical = 4.dp),
+        )
     }
 }
 
