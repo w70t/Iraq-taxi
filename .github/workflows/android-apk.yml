@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -53,6 +53,29 @@ jobs:
         with:
           name: IraqTaxi-driver-release-apk
           path: android/driver/build/outputs/apk/release/driver-release.apk
+
+      - name: Prepare direct-download APKs
+        run: |
+          mkdir -p release-apks
+          cp android/app/build/outputs/apk/release/app-release.apk release-apks/TaxiOneIraq-Rider.apk
+          cp android/driver/build/outputs/apk/release/driver-release.apk release-apks/TaxiOneIraq-Driver.apk
+          cp android/driver/build/outputs/apk/debug/driver-debug.apk release-apks/TaxiOneIraq-Driver-debug.apk
+
+      - name: Publish APKs with direct download links
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-latest
+          name: "تكسي واحد عراق — أحدث نسخ APK"
+          body: |
+            حمّل الملف وثبّته مباشرة على أندرويد (فعّل «التثبيت من مصادر غير معروفة»):
+
+            - **TaxiOneIraq-Rider.apk** — تطبيق الزبون
+            - **TaxiOneIraq-Driver.apk** — تطبيق السائق
+            - **TaxiOneIraq-Driver-debug.apk** — نسخة السائق للتجربة مع خادم محلي (تسمح بـ HTTP)
+
+            تُحدَّث هذه الملفات تلقائياً مع كل نسخة جديدة من الكود.
+          make_latest: true
+          files: release-apks/*.apk
 
   backend-tests:
     name: Backend tests
