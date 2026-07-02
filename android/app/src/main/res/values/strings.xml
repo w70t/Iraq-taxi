@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Default locale: Arabic (product's primary language). English lives in values-en. -->
+<resources>
+    <string name="app_name">تكسي واحد عراق</string>
+
+    <string name="tab_ride">اطلب</string>
+    <string name="tab_trips">رحلاتي</string>
+    <string name="tab_account">حسابي</string>
+
+    <string name="welcome_title">أهلاً بك في تكسي واحد عراق</string>
+    <string name="welcome_subtitle">رحلة آمنة في جميع محافظات العراق</string>
+
+    <string name="pickup_label">موقع الاستلام</string>
+    <string name="pickup_current">موقعي الحالي</string>
+
+    <string name="share_location_title">مشاركة موقعي للرحلة</string>
+    <string name="share_location_caption">يعمل داخل التطبيق فقط، ويتوقف تلقائياً عند إيقاف الزر أو مغادرة التطبيق.</string>
+    <string name="location_permission_denied">تم رفض إذن الموقع. فعّله من إعدادات النظام لمشاركة موقعك.</string>
+    <string name="location_active">الموقع مفعّل</string>
+
+    <string name="search_destination">ابحث عن وجهة</string>
+    <string name="clear_destination">مسح الوجهة</string>
+    <string name="destination_unset">وجهة لم تُحدد</string>
+
+    <string name="choose_ride">اختر رحلتك</string>
+    <string name="tier_economy">اقتصادي</string>
+    <string name="tier_economy_caption">سيارة يومية مريحة</string>
+    <string name="tier_family">عائلي</string>
+    <string name="tier_family_caption">مساحة أكبر للجميع</string>
+    <string name="tier_premium">بريميوم</string>
+    <string name="tier_premium_caption">تجربة أكثر راحة</string>
+
+    <string name="request_now">اطلب %1$s الآن</string>
+    <string name="request_received_title">تم استلام طلبك</string>
+    <string name="request_received_message">هذه نسخة تجريبية. سيظهر السائق هنا بعد ربط نظام الرحلات الحقيقي.</string>
+    <string name="ok">حسناً</string>
+
+    <string name="current_ride">الرحلة الحالية</string>
+    <string name="previous_rides">الرحلات السابقة</string>
+    <string name="no_rides_title">لا توجد رحلات بعد</string>
+    <string name="no_rides_caption">ستظهر رحلاتك المكتملة أو الملغاة هنا.</string>
+    <string name="simulate_acceptance">محاكاة قبول السائق</string>
+    <string name="cancel_request">إلغاء الطلب</string>
+    <string name="start_ride">بدء الرحلة</string>
+    <string name="complete_ride">إنهاء الرحلة</string>
+
+    <string name="status_searching">جارٍ البحث عن سائق</string>
+    <string name="status_driver_assigned">تم قبول الرحلة</string>
+    <string name="status_driver_arriving">السائق في الطريق إليك</string>
+    <string name="status_in_progress">الرحلة جارية</string>
+    <string name="status_completed">رحلة مكتملة</string>
+    <string name="status_cancelled">رحلة ملغاة</string>
+
+    <string name="fare_amount">%1$s د.ع</string>
+
+    <string name="account_section">الحساب</string>
+    <string name="name_label">الاسم</string>
+    <string name="default_user_name">مستخدم تكسي واحد</string>
+    <string name="payment_label">الدفع</string>
+    <string name="payment_cash">نقداً عند الوصول</string>
+
+    <string name="language_section">اللغة</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_english">English</string>
+    <string name="change_language">تغيير اللغة</string>
+
+    <string name="privacy_section">الأمان والخصوصية</string>
+    <string name="privacy_location">الموقع أثناء الاستخدام فقط — لا تتبّع في الخلفية</string>
+    <string name="privacy_storage">سجل رحلاتك مشفّر على جهازك (AES-256)</string>
+    <string name="privacy_no_network">هذه النسخة لا ترسل أي بيانات عبر الإنترنت</string>
+
+    <string name="delete_data">حذف جميع بياناتي</string>
+    <string name="delete_data_caption">يمسح سجل الرحلات المخزّن على هذا الجهاز نهائياً.</string>
+    <string name="delete_data_confirm_title">حذف البيانات؟</string>
+    <string name="delete_data_confirm_message">سيتم حذف سجل رحلاتك نهائياً من هذا الجهاز ولا يمكن التراجع.</string>
+    <string name="delete">حذف</string>
+    <string name="cancel">إلغاء</string>
+</resources>

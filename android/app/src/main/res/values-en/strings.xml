@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Taxi One Iraq</string>
+
+    <string name="tab_ride">Ride</string>
+    <string name="tab_trips">Trips</string>
+    <string name="tab_account">Account</string>
+
+    <string name="welcome_title">Welcome to Taxi One Iraq</string>
+    <string name="welcome_subtitle">Safe rides across every Iraqi governorate</string>
+
+    <string name="pickup_label">Pickup location</string>
+    <string name="pickup_current">My current location</string>
+
+    <string name="share_location_title">Share my location for this ride</string>
+    <string name="share_location_caption">Works only while the app is open, and stops when you switch it off or leave the app.</string>
+    <string name="location_permission_denied">Location permission denied. Enable it in system settings to share your location.</string>
+    <string name="location_active">Location active</string>
+
+    <string name="search_destination">Search destination</string>
+    <string name="clear_destination">Clear destination</string>
+    <string name="destination_unset">No destination set</string>
+
+    <string name="choose_ride">Choose your ride</string>
+    <string name="tier_economy">Economy</string>
+    <string name="tier_economy_caption">Comfortable everyday ride</string>
+    <string name="tier_family">Family</string>
+    <string name="tier_family_caption">More room for everyone</string>
+    <string name="tier_premium">Premium</string>
+    <string name="tier_premium_caption">A more refined ride</string>
+
+    <string name="request_now">Request %1$s now</string>
+    <string name="request_received_title">Request received</string>
+    <string name="request_received_message">This is a prototype. A driver will appear here after the live trip system is connected.</string>
+    <string name="ok">OK</string>
+
+    <string name="current_ride">Current ride</string>
+    <string name="previous_rides">Previous rides</string>
+    <string name="no_rides_title">No rides yet</string>
+    <string name="no_rides_caption">Completed and cancelled rides will appear here.</string>
+    <string name="simulate_acceptance">Simulate driver acceptance</string>
+    <string name="cancel_request">Cancel request</string>
+    <string name="start_ride">Start ride</string>
+    <string name="complete_ride">Complete ride</string>
+
+    <string name="status_searching">Looking for a driver</string>
+    <string name="status_driver_assigned">Ride accepted</string>
+    <string name="status_driver_arriving">Driver on the way</string>
+    <string name="status_in_progress">Ride in progress</string>
+    <string name="status_completed">Ride completed</string>
+    <string name="status_cancelled">Ride cancelled</string>
+
+    <string name="fare_amount">%1$s IQD</string>
+
+    <string name="account_section">Account</string>
+    <string name="name_label">Name</string>
+    <string name="default_user_name">Taxi One user</string>
+    <string name="payment_label">Payment</string>
+    <string name="payment_cash">Cash on arrival</string>
+
+    <string name="language_section">Language</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_english">English</string>
+    <string name="change_language">Change language</string>
+
+    <string name="privacy_section">Safety &amp; privacy</string>
+    <string name="privacy_location">Location while using the app only — no background tracking</string>
+    <string name="privacy_storage">Your ride history is encrypted on this device (AES-256)</string>
+    <string name="privacy_no_network">This build sends no data over the internet</string>
+
+    <string name="delete_data">Delete all my data</string>
+    <string name="delete_data_caption">Permanently clears the ride history stored on this device.</string>
+    <string name="delete_data_confirm_title">Delete data?</string>
+    <string name="delete_data_confirm_message">Your ride history will be permanently deleted from this device. This cannot be undone.</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+</resources>
