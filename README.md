@@ -84,6 +84,10 @@ keytool -genkeypair -v -keystore release.jks -keyalg RSA -keysize 4096 -validity
 
 ثم أضف `signingConfig` يقرأ من `keystore.properties` (خارج Git). لا ترفع المفتاح للمستودع أبداً.
 
+## خارطة الطريق
+
+الخطة الكاملة للمراحل القادمة — بمعايير قبول لكل ميزة — في [`ROADMAP.md`](ROADMAP.md).
+
 ## ما تبقى قبل الإطلاق التجاري
 
 1. **عقود الدفع**: تاجر زين كاش + FIB (+ Qi لسوبر كي) — الكود جاهز، ضع المفاتيح في `backend/.env`.
