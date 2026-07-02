@@ -37,7 +37,7 @@ import com.taxione.iraq.R
 import com.taxione.iraq.data.RideViewModel
 import com.taxione.iraq.model.Ride
 import com.taxione.iraq.model.RideStatus
-import com.taxione.iraq.ui.theme.TaxiOrange
+import com.taxione.core.ui.theme.TaxiOrange
 
 private val CardShape = RoundedCornerShape(20.dp)
 private val CardColor = Color.White.copy(alpha = 0.08f)

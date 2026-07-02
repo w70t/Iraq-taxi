@@ -2,7 +2,17 @@
 android/.gradle/
 android/build/
 android/app/build/
+android/core/build/
+android/driver/build/
 android/local.properties
+
+# Backend
+backend/.venv/
+backend/.env
+__pycache__/
+*.pyc
+*.db
+.pytest_cache/
 
 # IDE
 .idea/

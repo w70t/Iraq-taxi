@@ -25,18 +25,44 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Build debug and release APKs
+      - name: Build debug and release APKs (rider + driver)
         working-directory: android
         run: ./gradlew --no-daemon assembleDebug assembleRelease
 
-      - name: Upload debug APK
+      - name: Upload rider debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: IraqTaxi-debug-apk
+          name: IraqTaxi-rider-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Upload release APK
+      - name: Upload rider release APK
         uses: actions/upload-artifact@v4
         with:
-          name: IraqTaxi-release-apk
+          name: IraqTaxi-rider-release-apk
           path: android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload driver debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: IraqTaxi-driver-debug-apk
+          path: android/driver/build/outputs/apk/debug/driver-debug.apk
+
+      - name: Upload driver release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: IraqTaxi-driver-release-apk
+          path: android/driver/build/outputs/apk/release/driver-release.apk
+
+  backend-tests:
+    name: Backend tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install and test
+        working-directory: backend
+        run: |
+          pip install -r requirements.txt
+          python -m pytest tests/ -q

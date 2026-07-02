@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.IraqTaxiDriver" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/navy_background</item>
+        <item name="android:statusBarColor">@color/navy_background</item>
+        <item name="android:navigationBarColor">@color/navy_background</item>
+    </style>
+</resources>

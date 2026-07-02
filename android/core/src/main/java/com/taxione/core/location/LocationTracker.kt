@@ -1,4 +1,4 @@
-package com.taxione.iraq.data
+package com.taxione.core.location
 
 import android.Manifest
 import android.annotation.SuppressLint

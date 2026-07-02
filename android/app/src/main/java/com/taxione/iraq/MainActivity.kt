@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import com.taxione.iraq.ui.AppShell
-import com.taxione.iraq.ui.theme.IraqTaxiTheme
+import com.taxione.core.ui.theme.IraqTaxiTheme
 
 class MainActivity : AppCompatActivity() {
 

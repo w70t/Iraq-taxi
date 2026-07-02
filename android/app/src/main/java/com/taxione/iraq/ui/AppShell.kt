@@ -27,8 +27,8 @@ import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.taxione.iraq.R
 import com.taxione.iraq.data.RideViewModel
-import com.taxione.iraq.ui.theme.Navy
-import com.taxione.iraq.ui.theme.TaxiOrange
+import com.taxione.core.ui.theme.Navy
+import com.taxione.core.ui.theme.TaxiOrange
 
 /** Switches the app language ("ar" / "en"); the choice persists across restarts. */
 fun setAppLanguage(tag: String) {
