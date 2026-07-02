@@ -64,6 +64,12 @@
     <string name="privacy_storage">رمز الدخول مشفّر على جهازك (AES-256)</string>
     <string name="logout">تسجيل خروج</string>
 
+    <string name="support_section">الدعم والشكاوى</string>
+    <string name="complaint_hint">اكتب شكواك أو مشكلتك هنا…</string>
+    <string name="send_complaint">إرسال الشكوى</string>
+    <string name="complaint_open">قيد المراجعة</string>
+    <string name="complaint_resolved">تمت المعالجة ✔</string>
+
     <string name="error_generic">تعذر الاتصال بالخادم: %1$s</string>
     <string name="ok">حسناً</string>
 </resources>

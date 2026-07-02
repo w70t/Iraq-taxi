@@ -2,7 +2,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from sqlalchemy import text
 
 from .db import Base, engine
-from .routers import admin, auth, drivers, payments, trips
+from .routers import admin, auth, complaints, drivers, payments, trips
 from .security import decode_token
 from .ws import manager
 
@@ -26,6 +26,7 @@ app.include_router(auth.router)
 app.include_router(trips.router)
 app.include_router(drivers.router)
 app.include_router(payments.router)
+app.include_router(complaints.router)
 
 
 @app.get("/health")

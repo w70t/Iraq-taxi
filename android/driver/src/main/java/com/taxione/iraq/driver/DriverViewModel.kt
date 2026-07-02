@@ -3,6 +3,7 @@ package com.taxione.iraq.driver
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.taxione.core.model.ComplaintDto
 import com.taxione.core.model.IncentivePlan
 import com.taxione.core.model.TripDto
 import com.taxione.core.net.ApiClient
@@ -27,6 +28,8 @@ data class DriverUi(
     val commissionTotal: Int = 0,
     val tripsToday: Int = 0,
     val incentives: List<IncentivePlan> = emptyList(),
+    val complaints: List<ComplaintDto> = emptyList(),
+    val complaintSent: Boolean = false,
     val serverUrl: String = "",
     val carModel: String = "",
     val plate: String = "",
@@ -122,6 +125,21 @@ class DriverViewModel(application: Application) : AndroidViewModel(application) 
                 incentives = plans,
             )
         }
+    }
+
+    fun loadComplaints() = launchBusy {
+        val complaints = api.myComplaints()
+        _ui.update { it.copy(complaints = complaints) }
+    }
+
+    fun submitComplaint(text: String) = launchBusy {
+        api.submitComplaint(text.trim())
+        val complaints = api.myComplaints()
+        _ui.update { it.copy(complaints = complaints, complaintSent = true) }
+    }
+
+    fun clearComplaintSent() {
+        _ui.update { it.copy(complaintSent = false) }
     }
 
     fun logout() {

@@ -1,5 +1,6 @@
 package com.taxione.core.net
 
+import com.taxione.core.model.ComplaintDto
 import com.taxione.core.model.IncentivePlan
 import com.taxione.core.model.TripDto
 import org.json.JSONObject
@@ -61,6 +62,16 @@ class TaxiApi(val client: ApiClient) {
             response.optInt("count"),
             response.optInt("commission"),
         )
+    }
+
+    suspend fun submitComplaint(text: String) {
+        client.request("POST", "/complaints", JSONObject().put("text", text))
+    }
+
+    suspend fun myComplaints(): List<ComplaintDto> {
+        val response = client.request("GET", "/complaints/mine")
+        val items = response.optJSONArray("items") ?: return emptyList()
+        return (0 until items.length()).map { ComplaintDto.fromJson(items.getJSONObject(it)) }
     }
 
     suspend fun incentives(): Pair<Int, List<IncentivePlan>> {

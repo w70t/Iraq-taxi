@@ -7,6 +7,7 @@ import json
 
 from sqlalchemy.orm import Session
 
+from . import config
 from .models import Setting
 
 SETTINGS_KEY = "app"
@@ -22,6 +23,8 @@ DEFAULTS: dict = {
         "family": {"base": 3000, "per_km": 800, "minimum": 8000},
         "premium": {"base": 4500, "per_km": 1200, "minimum": 12000},
     },
+    # Driver bonus ladders, editable from /admin (env INCENTIVE_PLANS is the seed).
+    "incentive_plans": json.loads(config.INCENTIVE_PLANS),
 }
 
 
@@ -65,6 +68,36 @@ def validate(patch: dict) -> dict:
                 for field in ("base", "per_km", "minimum")
             }
         clean["tariffs"] = tariffs
+    if "incentive_plans" in patch:
+        clean["incentive_plans"] = _validate_plans(patch["incentive_plans"])
+    return clean
+
+
+def _validate_plans(plans) -> list:
+    if not isinstance(plans, list) or len(plans) > 10:
+        raise SettingsError("incentive_plans must be a list of at most 10 plans")
+    clean = []
+    for index, plan in enumerate(plans):
+        title = str(plan.get("title", "")).strip()
+        if not title:
+            raise SettingsError(f"plan {index + 1}: title is required")
+        steps = plan.get("steps")
+        if not isinstance(steps, list) or not steps or len(steps) > 10:
+            raise SettingsError(f"plan {index + 1}: steps must be a non-empty list (max 10)")
+        clean_steps = []
+        for step in steps:
+            trips = int(step.get("trips", 0))
+            bonus = int(step.get("bonus", -1))
+            if not 1 <= trips <= 100 or not 0 <= bonus <= 1_000_000:
+                raise SettingsError(f"plan {index + 1}: each step needs trips 1-100 and bonus 0-1,000,000")
+            clean_steps.append({"trips": trips, "bonus": bonus})
+        clean_steps.sort(key=lambda s: s["trips"])
+        clean.append({
+            "id": str(plan.get("id") or f"plan-{index + 1}"),
+            "title": title,
+            "description": str(plan.get("description", "")).strip(),
+            "steps": clean_steps,
+        })
     return clean
 
 

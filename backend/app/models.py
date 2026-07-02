@@ -91,6 +91,18 @@ class Trip(Base):
     updated_at: Mapped[int] = mapped_column(Integer, default=now, onupdate=now)
 
 
+class Complaint(Base):
+    __tablename__ = "complaints"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=_uuid)
+    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"), index=True)
+    trip_id: Mapped[str | None] = mapped_column(ForeignKey("trips.id"), nullable=True)
+    text: Mapped[str] = mapped_column(String)
+    status: Mapped[str] = mapped_column(String, default="open")  # open | resolved
+    created_at: Mapped[int] = mapped_column(Integer, default=now)
+    resolved_at: Mapped[int | None] = mapped_column(Integer, nullable=True)
+
+
 class Payment(Base):
     __tablename__ = "payments"
 

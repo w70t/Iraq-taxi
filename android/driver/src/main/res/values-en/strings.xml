@@ -64,6 +64,12 @@
     <string name="privacy_storage">Your sign-in token is encrypted on this device (AES-256)</string>
     <string name="logout">Sign out</string>
 
+    <string name="support_section">Support &amp; complaints</string>
+    <string name="complaint_hint">Describe your issue here…</string>
+    <string name="send_complaint">Send complaint</string>
+    <string name="complaint_open">Under review</string>
+    <string name="complaint_resolved">Resolved ✔</string>
+
     <string name="error_generic">Could not reach the server: %1$s</string>
     <string name="ok">OK</string>
 </resources>
