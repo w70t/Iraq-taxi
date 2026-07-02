@@ -12,6 +12,9 @@
 
     <string name="pickup_label">موقع الاستلام</string>
     <string name="pickup_current">موقعي الحالي</string>
+    <string name="pickup_point">نقطة الانطلاق</string>
+    <string name="locating_address">جارٍ تحديد العنوان…</string>
+    <string name="my_location">تحديد موقعي</string>
 
     <string name="share_location_title">مشاركة موقعي للرحلة</string>
     <string name="share_location_caption">يعمل داخل التطبيق فقط، ويتوقف تلقائياً عند إيقاف الزر أو مغادرة التطبيق.</string>
@@ -67,7 +70,7 @@
     <string name="privacy_section">الأمان والخصوصية</string>
     <string name="privacy_location">الموقع أثناء الاستخدام فقط — لا تتبّع في الخلفية</string>
     <string name="privacy_storage">سجل رحلاتك مشفّر على جهازك (AES-256)</string>
-    <string name="privacy_no_network">هذه النسخة لا ترسل أي بيانات عبر الإنترنت</string>
+    <string name="privacy_no_network">الإنترنت يُستخدم للخرائط والعناوين فقط — بلا إعلانات وبلا تتبّع</string>
 
     <string name="delete_data">حذف جميع بياناتي</string>
     <string name="delete_data_caption">يمسح سجل الرحلات المخزّن على هذا الجهاز نهائياً.</string>

@@ -11,6 +11,9 @@
 
     <string name="pickup_label">Pickup location</string>
     <string name="pickup_current">My current location</string>
+    <string name="pickup_point">Pickup point</string>
+    <string name="locating_address">Finding the address…</string>
+    <string name="my_location">Locate me</string>
 
     <string name="share_location_title">Share my location for this ride</string>
     <string name="share_location_caption">Works only while the app is open, and stops when you switch it off or leave the app.</string>
@@ -66,7 +69,7 @@
     <string name="privacy_section">Safety &amp; privacy</string>
     <string name="privacy_location">Location while using the app only — no background tracking</string>
     <string name="privacy_storage">Your ride history is encrypted on this device (AES-256)</string>
-    <string name="privacy_no_network">This build sends no data over the internet</string>
+    <string name="privacy_no_network">Internet is used for maps and addresses only — no ads, no tracking</string>
 
     <string name="delete_data">Delete all my data</string>
     <string name="delete_data_caption">Permanently clears the ride history stored on this device.</string>

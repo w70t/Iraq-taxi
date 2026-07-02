@@ -47,6 +47,10 @@
     <string name="earnings_title">أرباحي</string>
     <string name="earnings_total">إجمالي الأرباح</string>
     <string name="earnings_trips">رحلة مكتملة</string>
+    <string name="wallet_balance">الرصيد</string>
+    <string name="incentives_title">خطط الحوافز</string>
+    <string name="trips_today">رحلات اليوم: %1$d</string>
+    <string name="time_remaining">تنتهي خلال %1$dس %2$dد</string>
 
     <string name="account_title">حسابي</string>
     <string name="language_section">اللغة</string>

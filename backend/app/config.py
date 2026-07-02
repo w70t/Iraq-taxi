@@ -27,6 +27,24 @@ OTP_ECHO = _bool("OTP_ECHO", False)
 # verifying their licence and vehicle documents.
 DRIVER_AUTO_APPROVE = _bool("DRIVER_AUTO_APPROVE", True)
 
+# --- Driver incentives ----------------------------------------------------
+# Daily bonus ladders shown in the driver app. Override with your own plans
+# via the INCENTIVE_PLANS env var (same JSON shape). Bonuses are in IQD and
+# reset at midnight UTC.
+DEFAULT_INCENTIVE_PLANS = """[
+  {
+    "id": "daily-ladder",
+    "title": "مكافأة الرحلات اليومية",
+    "description": "أكمل رحلات اليوم واكسب مكافآت متصاعدة تُضاف إلى أرباحك.",
+    "steps": [
+      {"trips": 1, "bonus": 2000},
+      {"trips": 3, "bonus": 5000},
+      {"trips": 6, "bonus": 12000}
+    ]
+  }
+]"""
+INCENTIVE_PLANS = os.getenv("INCENTIVE_PLANS", DEFAULT_INCENTIVE_PLANS)
+
 # --- ZainCash merchant credentials (from your Zain Iraq merchant contract) ---
 ZAINCASH_BASE_URL = os.getenv("ZAINCASH_BASE_URL", "https://test.zaincash.iq")
 ZAINCASH_MSISDN = os.getenv("ZAINCASH_MSISDN", "")          # merchant wallet number

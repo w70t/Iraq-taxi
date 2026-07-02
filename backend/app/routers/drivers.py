@@ -1,9 +1,12 @@
+import json
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+from .. import config
 from ..db import get_db
 from ..fares import haversine_km
-from ..models import DriverProfile, Trip, User
+from ..models import DriverProfile, Trip, User, now
 from ..schemas import LocationUpdate, OnlineUpdate
 from ..security import require_role
 from ..serializers import trip_dict
@@ -88,6 +91,30 @@ def open_trips(
         in_range.sort(key=lambda pair: pair[0])
         return [dict(trip_dict(t, db), distance_km=round(km, 1)) for km, t in in_range]
     return [trip_dict(t, db) for t in trips]
+
+
+@router.get("/incentives")
+def incentives(
+    driver: User = Depends(require_role("driver")),
+    db: Session = Depends(get_db),
+):
+    """Daily bonus ladders plus the driver's completed trips since midnight UTC."""
+    now_ts = now()
+    midnight = now_ts - (now_ts % 86400)
+    trips_today = (
+        db.query(Trip)
+        .filter(
+            Trip.driver_id == driver.id,
+            Trip.status == "completed",
+            Trip.created_at >= midnight,
+        )
+        .count()
+    )
+    plans = json.loads(config.INCENTIVE_PLANS)
+    seconds_remaining = 86400 - (now_ts % 86400)
+    for plan in plans:
+        plan["seconds_remaining"] = seconds_remaining
+    return {"trips_today": trips_today, "plans": plans}
 
 
 @router.get("/earnings")

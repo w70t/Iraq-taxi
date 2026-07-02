@@ -26,6 +26,7 @@ enum class VehicleTier(
 
 data class Ride(
     val id: String = UUID.randomUUID().toString(),
+    val pickup: String = "",
     val destination: String,
     val tier: VehicleTier,
     val fare: Int,
@@ -36,6 +37,7 @@ data class Ride(
 ) {
     fun toJson(): JSONObject = JSONObject().apply {
         put("id", id)
+        put("pickup", pickup)
         put("destination", destination)
         put("tier", tier.name)
         put("fare", fare)
@@ -48,6 +50,7 @@ data class Ride(
     companion object {
         fun fromJson(json: JSONObject): Ride = Ride(
             id = json.optString("id", UUID.randomUUID().toString()),
+            pickup = json.optString("pickup"),
             destination = json.optString("destination"),
             tier = runCatching { VehicleTier.valueOf(json.optString("tier")) }
                 .getOrDefault(VehicleTier.ECONOMY),

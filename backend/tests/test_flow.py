@@ -166,6 +166,15 @@ def test_payment_methods_and_unconfigured_providers(rider):
     client.post(f"/trips/{trip['id']}/cancel", headers=rider_headers)
 
 
+def test_incentives(driver):
+    response = client.get("/drivers/incentives", headers=auth(driver["access_token"]))
+    assert response.status_code == 200
+    body = response.json()
+    assert body["trips_today"] >= 1  # the lifecycle test completed one trip today
+    assert body["plans"] and body["plans"][0]["steps"]
+    assert body["plans"][0]["seconds_remaining"] > 0
+
+
 def test_role_separation(rider):
     rider_headers = auth(rider["access_token"])
     response = client.post("/drivers/status", json={"online": True}, headers=rider_headers)
