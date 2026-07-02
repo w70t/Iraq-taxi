@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.TripOrigin
@@ -113,11 +114,14 @@ fun RequestsScreen(vm: DriverViewModel) {
         }
     }
 
+    LaunchedEffect(Unit) { vm.loadEarnings() }
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(20.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
+        item { BalanceCard(ui.earningsTotal) }
         item {
             OnlineCard(
                 online = ui.online,
@@ -169,6 +173,36 @@ fun RequestsScreen(vm: DriverViewModel) {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun BalanceCard(total: Int) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clip(CardShape)
+            .background(CardColor)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Icon(
+            Icons.Filled.AccountBalanceWallet,
+            contentDescription = null,
+            tint = SafeGreen,
+        )
+        Text(
+            stringResource(R.string.wallet_balance),
+            color = Color.White.copy(alpha = 0.7f),
+        )
+        Spacer(Modifier.weight(1f))
+        Text(
+            stringResource(R.string.fare_amount, formatFare(total)),
+            fontWeight = FontWeight.Bold,
+            color = SafeGreen,
+            style = MaterialTheme.typography.titleMedium,
+        )
     }
 }
 

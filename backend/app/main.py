@@ -1,11 +1,19 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from sqlalchemy import text
 
 from .db import Base, engine
-from .routers import auth, drivers, payments, trips
+from .routers import admin, auth, drivers, payments, trips
 from .security import decode_token
 from .ws import manager
 
 Base.metadata.create_all(engine)
+
+# Lightweight migration for databases created before the commission column.
+with engine.begin() as connection:
+    try:
+        connection.execute(text("ALTER TABLE trips ADD COLUMN commission INTEGER DEFAULT 0"))
+    except Exception:
+        pass  # column already exists
 
 app = FastAPI(
     title="Taxi One Iraq API",
@@ -13,6 +21,7 @@ app = FastAPI(
     description="Backend for the Taxi One Iraq rider and driver apps.",
 )
 
+app.include_router(admin.router)
 app.include_router(auth.router)
 app.include_router(trips.router)
 app.include_router(drivers.router)

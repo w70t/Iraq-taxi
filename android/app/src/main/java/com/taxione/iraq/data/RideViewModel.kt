@@ -26,8 +26,9 @@ class RideViewModel(application: Application) : AndroidViewModel(application) {
         restore()
     }
 
-    fun requestRide(destination: String, tier: VehicleTier) {
+    fun requestRide(destination: String, tier: VehicleTier, pickup: String = "") {
         _currentRide.value = Ride(
+            pickup = pickup,
             destination = destination,
             tier = tier,
             fare = tier.fare,

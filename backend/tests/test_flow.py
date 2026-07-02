@@ -5,6 +5,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 os.environ["DATABASE_URL"] = "sqlite:///./test_taxi.db"
 os.environ["SECRET_KEY"] = "test-secret"
+os.environ["ADMIN_TOKEN"] = "admin-test-token"
 
 import pathlib
 
@@ -118,16 +119,22 @@ def test_full_trip_lifecycle(rider, driver):
         assert response.status_code == 200, response.text
         assert response.json()["status"] == expected
 
-    # Cash trips are settled on completion
-    assert response.json()["paid"] is True
+    # Cash trips are settled on completion, with the default 10% commission
+    completed = response.json()
+    assert completed["paid"] is True
+    expected_commission = round(trip["fare_estimate"] * 0.10)
+    assert completed["commission"] == expected_commission
 
-    # History and earnings reflect the completed trip
+    # History and earnings reflect the completed trip (net of commission)
     response = client.get("/trips/history", headers=rider_headers)
     assert any(t["id"] == trip["id"] for t in response.json())
 
     response = client.get("/drivers/earnings", headers=driver_headers)
     body = response.json()
-    assert body["count"] == 1 and body["total"] == trip["fare_estimate"]
+    assert body["count"] == 1
+    assert body["gross"] == trip["fare_estimate"]
+    assert body["commission"] == expected_commission
+    assert body["total"] == trip["fare_estimate"] - expected_commission
 
 
 def test_payment_methods_and_unconfigured_providers(rider):
@@ -164,6 +171,56 @@ def test_payment_methods_and_unconfigured_providers(rider):
     assert response.status_code == 200
 
     client.post(f"/trips/{trip['id']}/cancel", headers=rider_headers)
+
+
+def test_incentives(driver):
+    response = client.get("/drivers/incentives", headers=auth(driver["access_token"]))
+    assert response.status_code == 200
+    body = response.json()
+    assert body["trips_today"] >= 1  # the lifecycle test completed one trip today
+    assert body["plans"] and body["plans"][0]["steps"]
+    assert body["plans"][0]["seconds_remaining"] > 0
+
+
+def test_admin_controls_fees(rider, driver):
+    admin = {"X-Admin-Token": "admin-test-token"}
+
+    # Wrong or missing token is rejected
+    assert client.get("/admin/settings").status_code == 403
+    assert client.get("/admin/settings", headers={"X-Admin-Token": "nope"}).status_code == 403
+
+    # Owner raises commission to 20% and adds a 1,000 IQD booking fee
+    settings = client.get("/admin/settings", headers=admin).json()
+    response = client.put(
+        "/admin/settings",
+        json={"commission_percent": 20, "booking_fee": 1000, "tariffs": settings["tariffs"]},
+        headers=admin,
+    )
+    assert response.status_code == 200
+    assert response.json()["commission_percent"] == 20
+
+    # Out-of-range values are rejected
+    assert client.put("/admin/settings", json={"commission_percent": 90}, headers=admin).status_code == 400
+
+    # New trip picks up the booking fee: economy minimum 5000 + 1000
+    rider_headers = auth(rider["access_token"])
+    driver_headers = auth(driver["access_token"])
+    response = client.post(
+        "/trips",
+        json={"pickup_lat": 33.312, "pickup_lng": 44.361, "tier": "economy"},
+        headers=rider_headers,
+    )
+    assert response.status_code == 201
+    trip = response.json()
+    assert trip["fare_estimate"] == 6000
+
+    # Complete it and verify the platform cut: (6000-1000)*20% + 1000 = 2000
+    client.post(f"/trips/{trip['id']}/accept", headers=driver_headers)
+    client.post(f"/trips/{trip['id']}/arrived", headers=driver_headers)
+    client.post(f"/trips/{trip['id']}/start", headers=driver_headers)
+    response = client.post(f"/trips/{trip['id']}/complete", headers=driver_headers)
+    assert response.status_code == 200
+    assert response.json()["commission"] == 2000
 
 
 def test_role_separation(rider):

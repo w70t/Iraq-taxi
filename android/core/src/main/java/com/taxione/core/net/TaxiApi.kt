@@ -1,5 +1,6 @@
 package com.taxione.core.net
 
+import com.taxione.core.model.IncentivePlan
 import com.taxione.core.model.TripDto
 import org.json.JSONObject
 
@@ -52,8 +53,21 @@ class TaxiApi(val client: ApiClient) {
     suspend fun tripAction(tripId: String, action: String): TripDto =
         TripDto.fromJson(client.request("POST", "/trips/$tripId/$action"))
 
-    suspend fun earnings(): Pair<Int, Int> {
+    /** Driver earnings: net total (after commission), trip count, platform commission. */
+    suspend fun earnings(): Triple<Int, Int, Int> {
         val response = client.request("GET", "/drivers/earnings")
-        return response.optInt("total") to response.optInt("count")
+        return Triple(
+            response.optInt("total"),
+            response.optInt("count"),
+            response.optInt("commission"),
+        )
+    }
+
+    suspend fun incentives(): Pair<Int, List<IncentivePlan>> {
+        val response = client.request("GET", "/drivers/incentives")
+        val plansJson = response.optJSONArray("plans")
+        val plans = if (plansJson == null) emptyList() else
+            (0 until plansJson.length()).map { IncentivePlan.fromJson(plansJson.getJSONObject(it)) }
+        return response.optInt("trips_today") to plans
     }
 }

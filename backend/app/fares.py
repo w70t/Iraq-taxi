@@ -1,16 +1,11 @@
 """Fare estimation: base + per-km over straight-line distance.
 
-Straight-line (haversine) underestimates road distance, so PER_KM rates are
-tuned upward. Replace with OSRM route distance when a routing server is added.
+Tariffs, booking fee and commission come from the admin-editable settings
+(see settings_store / the /admin panel). Straight-line (haversine)
+underestimates road distance, so per-km rates apply a 1.3 road factor.
+Replace with OSRM route distance when a routing server is added.
 """
 import math
-
-TARIFFS = {
-    #        base   per km   minimum
-    "economy": (2_000, 600, 5_000),
-    "family": (3_000, 800, 8_000),
-    "premium": (4_500, 1_200, 12_000),
-}
 
 ROUND_TO = 250
 
@@ -24,12 +19,22 @@ def haversine_km(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
     return 2 * r * math.asin(math.sqrt(a))
 
 
-def estimate(tier: str, pickup_lat: float, pickup_lng: float,
+def estimate(settings: dict, tier: str, pickup_lat: float, pickup_lng: float,
              dest_lat: float | None, dest_lng: float | None) -> int:
-    base, per_km, minimum = TARIFFS.get(tier, TARIFFS["economy"])
+    tariffs = settings["tariffs"]
+    tariff = tariffs.get(tier, tariffs["economy"])
+    booking_fee = int(settings.get("booking_fee", 0))
     if dest_lat is None or dest_lng is None:
-        return minimum
+        return tariff["minimum"] + booking_fee
     km = haversine_km(pickup_lat, pickup_lng, dest_lat, dest_lng)
-    fare = base + per_km * km * 1.3  # 1.3 ≈ road factor over straight line
-    fare = max(fare, minimum)
-    return int(round(fare / ROUND_TO) * ROUND_TO)
+    fare = tariff["base"] + tariff["per_km"] * km * 1.3
+    fare = max(fare, tariff["minimum"])
+    return int(round(fare / ROUND_TO) * ROUND_TO) + booking_fee
+
+
+def commission_for(settings: dict, fare: int) -> int:
+    """Platform cut for a completed trip: percentage of fare + booking fee."""
+    pct = float(settings.get("commission_percent", 0))
+    booking_fee = int(settings.get("booking_fee", 0))
+    ride_part = max(fare - booking_fee, 0)
+    return int(round(ride_part * pct / 100)) + booking_fee
