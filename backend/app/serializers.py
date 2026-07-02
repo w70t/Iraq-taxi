@@ -11,6 +11,7 @@ def trip_dict(trip: Trip, db: Session) -> dict:
         "destination": {"lat": trip.dest_lat, "lng": trip.dest_lng, "label": trip.dest_label},
         "tier": trip.tier,
         "fare_estimate": trip.fare_estimate,
+        "commission": trip.commission,
         "payment_method": trip.payment_method,
         "paid": trip.paid,
         "created_at": trip.created_at,

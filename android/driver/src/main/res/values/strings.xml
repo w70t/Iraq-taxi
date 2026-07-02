@@ -48,6 +48,7 @@
     <string name="earnings_total">إجمالي الأرباح</string>
     <string name="earnings_trips">رحلة مكتملة</string>
     <string name="wallet_balance">الرصيد</string>
+    <string name="platform_commission">عمولة المنصة المخصومة: %1$s د.ع</string>
     <string name="incentives_title">خطط الحوافز</string>
     <string name="trips_today">رحلات اليوم: %1$d</string>
     <string name="time_remaining">تنتهي خلال %1$dس %2$dد</string>

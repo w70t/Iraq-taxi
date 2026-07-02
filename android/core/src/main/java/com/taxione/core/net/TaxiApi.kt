@@ -53,9 +53,14 @@ class TaxiApi(val client: ApiClient) {
     suspend fun tripAction(tripId: String, action: String): TripDto =
         TripDto.fromJson(client.request("POST", "/trips/$tripId/$action"))
 
-    suspend fun earnings(): Pair<Int, Int> {
+    /** Driver earnings: net total (after commission), trip count, platform commission. */
+    suspend fun earnings(): Triple<Int, Int, Int> {
         val response = client.request("GET", "/drivers/earnings")
-        return response.optInt("total") to response.optInt("count")
+        return Triple(
+            response.optInt("total"),
+            response.optInt("count"),
+            response.optInt("commission"),
+        )
     }
 
     suspend fun incentives(): Pair<Int, List<IncentivePlan>> {

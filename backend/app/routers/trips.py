@@ -7,6 +7,7 @@ from ..models import ACTIVE_STATUSES, DriverProfile, Trip, User
 from ..schemas import TripCreate
 from ..security import current_user, require_role
 from ..serializers import trip_dict
+from ..settings_store import get_settings
 from ..ws import notify_trip
 
 router = APIRouter(prefix="/trips", tags=["trips"])
@@ -41,7 +42,8 @@ async def create_trip(
         dest_label=body.dest_label,
         tier=body.tier,
         fare_estimate=fares.estimate(
-            body.tier, body.pickup_lat, body.pickup_lng, body.dest_lat, body.dest_lng
+            get_settings(db), body.tier,
+            body.pickup_lat, body.pickup_lng, body.dest_lat, body.dest_lng,
         ),
     )
     db.add(trip)
@@ -155,8 +157,10 @@ async def complete(
     db: Session = Depends(get_db),
 ):
     trip = _transition(db, trip_id, driver, "in_progress", "completed")
+    # Platform cut is locked in at completion time using the current settings.
+    trip.commission = fares.commission_for(get_settings(db), trip.fare_estimate)
     if trip.payment_method == "cash":
         trip.paid = True  # cash is settled in the car
-        db.commit()
+    db.commit()
     await notify_trip(trip, db)
     return trip_dict(trip, db)

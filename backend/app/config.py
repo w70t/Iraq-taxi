@@ -14,6 +14,12 @@ SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_hex(32)
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./taxi.db")
 ACCESS_TOKEN_DAYS = int(os.getenv("ACCESS_TOKEN_DAYS", "7"))
 
+# --- Admin ----------------------------------------------------------------
+# Token for the /admin panel and admin API (fees, tariffs). Leave empty to
+# disable admin access entirely. Generate one with:
+#   python -c "import secrets;print(secrets.token_urlsafe(24))"
+ADMIN_TOKEN = os.getenv("ADMIN_TOKEN", "")
+
 # --- OTP ----------------------------------------------------------------
 OTP_TTL_SECONDS = int(os.getenv("OTP_TTL_SECONDS", "300"))
 OTP_MAX_ATTEMPTS = int(os.getenv("OTP_MAX_ATTEMPTS", "5"))

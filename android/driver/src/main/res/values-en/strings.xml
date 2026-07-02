@@ -48,6 +48,7 @@
     <string name="earnings_total">Total earnings</string>
     <string name="earnings_trips">completed rides</string>
     <string name="wallet_balance">Balance</string>
+    <string name="platform_commission">Platform commission deducted: %1$s IQD</string>
     <string name="incentives_title">Bonus plans</string>
     <string name="trips_today">Trips today: %1$d</string>
     <string name="time_remaining">Ends in %1$dh %2$dm</string>

@@ -128,8 +128,12 @@ def earnings(
         .order_by(Trip.created_at.desc())
         .all()
     )
+    gross = sum(t.fare_estimate for t in trips)
+    commission = sum(t.commission for t in trips)
     return {
-        "total": sum(t.fare_estimate for t in trips),
+        "total": gross - commission,  # what the driver actually keeps
+        "gross": gross,
+        "commission": commission,
         "count": len(trips),
         "trips": [trip_dict(t, db) for t in trips[:50]],
     }

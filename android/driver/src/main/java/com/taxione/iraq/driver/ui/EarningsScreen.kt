@@ -87,6 +87,16 @@ fun EarningsScreen(vm: DriverViewModel) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.White.copy(alpha = 0.6f),
                 )
+                if (ui.commissionTotal > 0) {
+                    Text(
+                        stringResource(
+                            R.string.platform_commission,
+                            formatFare(ui.commissionTotal),
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.White.copy(alpha = 0.5f),
+                    )
+                }
             }
         }
 

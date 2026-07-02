@@ -57,6 +57,15 @@ TRIP_STATUSES = ["requested", "accepted", "arrived", "in_progress", "completed",
 ACTIVE_STATUSES = ["requested", "accepted", "arrived", "in_progress"]
 
 
+class Setting(Base):
+    """Runtime-editable app settings (fees, tariffs) stored as JSON."""
+
+    __tablename__ = "settings"
+
+    key: Mapped[str] = mapped_column(String, primary_key=True)
+    value: Mapped[str] = mapped_column(String, default="{}")
+
+
 class Trip(Base):
     __tablename__ = "trips"
 
@@ -74,6 +83,7 @@ class Trip(Base):
 
     tier: Mapped[str] = mapped_column(String, default="economy")
     fare_estimate: Mapped[int] = mapped_column(Integer, default=0)
+    commission: Mapped[int] = mapped_column(Integer, default=0)
     payment_method: Mapped[str] = mapped_column(String, default="cash")
     paid: Mapped[bool] = mapped_column(Boolean, default=False)
 

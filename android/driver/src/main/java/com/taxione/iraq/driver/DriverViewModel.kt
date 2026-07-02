@@ -24,6 +24,7 @@ data class DriverUi(
     val activeTrip: TripDto? = null,
     val earningsTotal: Int = 0,
     val earningsCount: Int = 0,
+    val commissionTotal: Int = 0,
     val tripsToday: Int = 0,
     val incentives: List<IncentivePlan> = emptyList(),
     val serverUrl: String = "",
@@ -110,12 +111,13 @@ class DriverViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun loadEarnings() = launchBusy {
-        val (total, count) = api.earnings()
+        val (total, count, commission) = api.earnings()
         val (tripsToday, plans) = api.incentives()
         _ui.update {
             it.copy(
                 earningsTotal = total,
                 earningsCount = count,
+                commissionTotal = commission,
                 tripsToday = tripsToday,
                 incentives = plans,
             )
