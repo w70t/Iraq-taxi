@@ -28,15 +28,15 @@
 4. تُطبَّق على الرحلات الجديدة فوراً، وتُخصم العمولة تلقائياً من أرباح السائق (يرى الصافي والعمولة في تطبيقه).
 - الدفع: نقدي + زين كاش + FIB (يتفعّل بوضع مفاتيح التاجر) — باي بال غير متاح للتجار في العراق.
 
-## تحميل ملفات APK
+## تحميل ملفات APK — روابط مباشرة
 
-كل دفعة تبني التطبيقين تلقائياً عبر GitHub Actions:
+اضغط الرابط من هاتفك، نزّل، ثبّت (فعّل «التثبيت من مصادر غير معروفة»):
 
-1. افتح تبويب **Actions** ← آخر تشغيل ناجح لـ **Android APK**.
-2. حمّل من قسم Artifacts:
-   - `IraqTaxi-rider-release-apk` — تطبيق الزبون
-   - `IraqTaxi-driver-release-apk` — تطبيق السائق
-3. انقل الملف للهاتف وفعّل «التثبيت من مصادر غير معروفة».
+- **تطبيق الزبون**: https://github.com/w70t/Iraq-taxi/releases/download/apk-latest/TaxiOneIraq-Rider.apk
+- **تطبيق السائق**: https://github.com/w70t/Iraq-taxi/releases/download/apk-latest/TaxiOneIraq-Driver.apk
+- نسخة السائق للتجربة مع خادم محلي: https://github.com/w70t/Iraq-taxi/releases/download/apk-latest/TaxiOneIraq-Driver-debug.apk
+
+تُحدَّث الملفات تلقائياً مع كل دفعة كود (صفحة كل النسخ: [Releases](https://github.com/w70t/Iraq-taxi/releases)).
 
 ## تجربة المنظومة كاملة (زبون + سائق + خادم)
 
