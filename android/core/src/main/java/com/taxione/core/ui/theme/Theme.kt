@@ -1,4 +1,4 @@
-package com.taxione.iraq.ui.theme
+package com.taxione.core.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme

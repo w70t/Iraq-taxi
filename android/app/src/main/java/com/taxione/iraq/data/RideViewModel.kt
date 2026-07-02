@@ -2,6 +2,7 @@ package com.taxione.iraq.data
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.taxione.core.security.SecureStorage
 import com.taxione.iraq.model.Ride
 import com.taxione.iraq.model.RideStatus
 import com.taxione.iraq.model.VehicleTier

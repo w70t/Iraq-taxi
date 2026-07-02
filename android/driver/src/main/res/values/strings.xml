@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">تكسي واحد — سائق</string>
+
+    <string name="login_title">تسجيل دخول السائق</string>
+    <string name="login_caption">أدخل رقم هاتفك لاستلام رمز التحقق</string>
+    <string name="phone_label">رقم الهاتف (مثال: +9647701234567)</string>
+    <string name="name_label">الاسم</string>
+    <string name="car_model_label">نوع السيارة</string>
+    <string name="plate_label">رقم اللوحة</string>
+    <string name="server_label">عنوان الخادم</string>
+    <string name="send_code">أرسل رمز التحقق</string>
+    <string name="code_label">رمز التحقق</string>
+    <string name="verify">تحقق ودخول</string>
+    <string name="debug_code_hint">وضع التطوير — الرمز: %1$s</string>
+
+    <string name="tab_requests">الطلبات</string>
+    <string name="tab_earnings">أرباحي</string>
+    <string name="tab_account">حسابي</string>
+
+    <string name="online_title">متاح لاستقبال الطلبات</string>
+    <string name="online_caption">عند التفعيل يُشارك موقعك أثناء عمل التطبيق فقط، ويتوقف عند مغادرته.</string>
+    <string name="location_permission_needed">استقبال الطلبات يتطلب إذن الموقع. فعّله من إعدادات النظام.</string>
+
+    <string name="open_requests">الطلبات القريبة</string>
+    <string name="no_requests">لا توجد طلبات قريبة حالياً. ستظهر هنا فور وصولها.</string>
+    <string name="go_online_hint">فعّل «متاح» بالأعلى لتستقبل الطلبات.</string>
+    <string name="distance_away">يبعد %1$s كم</string>
+    <string name="accept">اقبل الرحلة</string>
+
+    <string name="active_trip">الرحلة الحالية</string>
+    <string name="pickup_label">نقطة الاستلام</string>
+    <string name="dest_label">الوجهة</string>
+    <string name="no_destination">وجهة لم تُحدد</string>
+    <string name="navigate_waze">الملاحة عبر Waze</string>
+    <string name="btn_arrived">وصلتُ لنقطة الاستلام</string>
+    <string name="btn_start">بدء الرحلة</string>
+    <string name="btn_complete">إنهاء الرحلة</string>
+    <string name="btn_cancel">إلغاء الرحلة</string>
+
+    <string name="status_accepted">تم القبول — توجّه إلى الزبون</string>
+    <string name="status_arrived">وصلت — بانتظار الزبون</string>
+    <string name="status_in_progress">الرحلة جارية</string>
+
+    <string name="fare_amount">%1$s د.ع</string>
+
+    <string name="earnings_title">أرباحي</string>
+    <string name="earnings_total">إجمالي الأرباح</string>
+    <string name="earnings_trips">رحلة مكتملة</string>
+
+    <string name="account_title">حسابي</string>
+    <string name="language_section">اللغة</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_english">English</string>
+    <string name="server_section">الخادم</string>
+    <string name="save">حفظ</string>
+    <string name="privacy_section">الأمان والخصوصية</string>
+    <string name="privacy_location">موقعك يُشارك أثناء عملك فقط — لا تتبّع في الخلفية</string>
+    <string name="privacy_storage">رمز الدخول مشفّر على جهازك (AES-256)</string>
+    <string name="logout">تسجيل خروج</string>
+
+    <string name="error_generic">تعذر الاتصال بالخادم: %1$s</string>
+    <string name="ok">حسناً</string>
+</resources>

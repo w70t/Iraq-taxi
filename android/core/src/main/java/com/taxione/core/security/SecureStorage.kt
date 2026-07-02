@@ -1,4 +1,4 @@
-package com.taxione.iraq.data
+package com.taxione.core.security
 
 import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
@@ -39,6 +39,10 @@ class SecureStorage(context: Context) {
             // Keystore was reset or the entry is corrupted: treat as absent.
             null
         }
+    }
+
+    fun remove(key: String) {
+        prefs.edit().remove(key).apply()
     }
 
     fun clear() {

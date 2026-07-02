@@ -73,12 +73,12 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.taxione.iraq.R
-import com.taxione.iraq.data.LocationTracker
+import com.taxione.core.location.LocationTracker
 import com.taxione.iraq.data.RideViewModel
 import com.taxione.iraq.model.VehicleTier
-import com.taxione.iraq.ui.theme.Navy
-import com.taxione.iraq.ui.theme.SafeGreen
-import com.taxione.iraq.ui.theme.TaxiOrange
+import com.taxione.core.ui.theme.Navy
+import com.taxione.core.ui.theme.SafeGreen
+import com.taxione.core.ui.theme.TaxiOrange
 import java.text.NumberFormat
 
 private val CardShape = RoundedCornerShape(22.dp)

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Taxi One — Driver</string>
+
+    <string name="login_title">Driver sign in</string>
+    <string name="login_caption">Enter your phone number to receive a verification code</string>
+    <string name="phone_label">Phone number (e.g. +9647701234567)</string>
+    <string name="name_label">Name</string>
+    <string name="car_model_label">Car model</string>
+    <string name="plate_label">Plate number</string>
+    <string name="server_label">Server address</string>
+    <string name="send_code">Send verification code</string>
+    <string name="code_label">Verification code</string>
+    <string name="verify">Verify &amp; sign in</string>
+    <string name="debug_code_hint">Dev mode — code: %1$s</string>
+
+    <string name="tab_requests">Requests</string>
+    <string name="tab_earnings">Earnings</string>
+    <string name="tab_account">Account</string>
+
+    <string name="online_title">Available for requests</string>
+    <string name="online_caption">While on, your location is shared only when the app is open, and stops when you leave it.</string>
+    <string name="location_permission_needed">Receiving requests needs location permission. Enable it in system settings.</string>
+
+    <string name="open_requests">Nearby requests</string>
+    <string name="no_requests">No nearby requests right now. They will appear here as they arrive.</string>
+    <string name="go_online_hint">Turn on “Available” above to receive requests.</string>
+    <string name="distance_away">%1$s km away</string>
+    <string name="accept">Accept ride</string>
+
+    <string name="active_trip">Current ride</string>
+    <string name="pickup_label">Pickup point</string>
+    <string name="dest_label">Destination</string>
+    <string name="no_destination">No destination set</string>
+    <string name="navigate_waze">Navigate with Waze</string>
+    <string name="btn_arrived">Arrived at pickup</string>
+    <string name="btn_start">Start ride</string>
+    <string name="btn_complete">Complete ride</string>
+    <string name="btn_cancel">Cancel ride</string>
+
+    <string name="status_accepted">Accepted — head to the rider</string>
+    <string name="status_arrived">Arrived — waiting for the rider</string>
+    <string name="status_in_progress">Ride in progress</string>
+
+    <string name="fare_amount">%1$s IQD</string>
+
+    <string name="earnings_title">My earnings</string>
+    <string name="earnings_total">Total earnings</string>
+    <string name="earnings_trips">completed rides</string>
+
+    <string name="account_title">My account</string>
+    <string name="language_section">Language</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_english">English</string>
+    <string name="server_section">Server</string>
+    <string name="save">Save</string>
+    <string name="privacy_section">Safety &amp; privacy</string>
+    <string name="privacy_location">Your location is shared only while working — no background tracking</string>
+    <string name="privacy_storage">Your sign-in token is encrypted on this device (AES-256)</string>
+    <string name="logout">Sign out</string>
+
+    <string name="error_generic">Could not reach the server: %1$s</string>
+    <string name="ok">OK</string>
+</resources>

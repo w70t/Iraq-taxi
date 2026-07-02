@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "IraqTaxi"
 include(":app")
+include(":core")
+include(":driver")
