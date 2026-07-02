@@ -13,6 +13,9 @@ def _bool(name: str, default: bool) -> bool:
 SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_hex(32)
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./taxi.db")
 ACCESS_TOKEN_DAYS = int(os.getenv("ACCESS_TOKEN_DAYS", "7"))
+# Redis enables WebSocket fan-out across multiple uvicorn workers/hosts.
+# Leave empty to run single-process (dev, tests, tiny deployments).
+REDIS_URL = os.getenv("REDIS_URL", "")
 
 # --- Admin ----------------------------------------------------------------
 # Token for the /admin panel and admin API (fees, tariffs). Leave empty to

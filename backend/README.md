@@ -19,6 +19,23 @@ cp .env.example .env        # ثم عدّل القيم
 docker compose up --build
 ```
 
+## النشر للإنتاج (Raspberry Pi أو أي خادم)
+
+الدليل الكامل في [`DEPLOY.md`](DEPLOY.md) — حزمة `docker-compose.prod.yml` تشغّل
+PostgreSQL + Redis + الخادم + Caddy (HTTPS تلقائي) على أي جهاز arm64 أو amd64:
+
+```bash
+cp .env.example .env   # عبّئ SECRET_KEY, ADMIN_TOKEN, POSTGRES_PASSWORD, DOMAIN
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+## ترحيلات قاعدة البيانات (Alembic)
+
+- SQLite (تطوير/اختبارات): الجداول تُنشأ تلقائياً عند الإقلاع — لا شيء عليك.
+- PostgreSQL (إنتاج): `alembic upgrade head` — يعمل تلقائياً في حزمة الإنتاج.
+- عند تعديل `app/models.py`: `alembic revision --autogenerate -m "وصف"` ثم راجع
+  الملف المولَّد في `alembic/versions/`.
+
 ## الاختبارات
 
 ```bash

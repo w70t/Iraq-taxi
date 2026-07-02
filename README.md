@@ -84,6 +84,11 @@ keytool -genkeypair -v -keystore release.jks -keyalg RSA -keysize 4096 -validity
 
 ثم أضف `signingConfig` يقرأ من `keystore.properties` (خارج Git). لا ترفع المفتاح للمستودع أبداً.
 
+## النشر على خادمك (Raspberry Pi 5 أو سحابة)
+
+دليل النشر الكامل — PostgreSQL + Redis + HTTPS تلقائي بأمر واحد، مع النسخ الاحتياطي
+وخطة الانتقال للسحابة لاحقاً دون تغيير كود — في [`backend/DEPLOY.md`](backend/DEPLOY.md).
+
 ## خارطة الطريق
 
 الخطة الكاملة للمراحل القادمة — بمعايير قبول لكل ميزة — في [`ROADMAP.md`](ROADMAP.md).
