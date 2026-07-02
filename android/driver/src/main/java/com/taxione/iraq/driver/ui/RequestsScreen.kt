@@ -333,12 +333,14 @@ private fun ActiveTripCard(trip: TripDto, vm: DriverViewModel) {
             color = Color.White,
         )
 
+        val destLat = trip.destLat
+        val destLng = trip.destLng
         OsmMap(
             center = MapPin(trip.pickupLat, trip.pickupLng),
             pins = buildList {
                 add(MapPin(trip.pickupLat, trip.pickupLng, trip.pickupLabel))
-                if (trip.destLat != null && trip.destLng != null) {
-                    add(MapPin(trip.destLat, trip.destLng, trip.destLabel))
+                if (destLat != null && destLng != null) {
+                    add(MapPin(destLat, destLng, trip.destLabel))
                 }
             },
             modifier = Modifier
@@ -348,8 +350,8 @@ private fun ActiveTripCard(trip: TripDto, vm: DriverViewModel) {
         )
 
         // Waze gets the pickup point before the ride starts, then the destination.
-        val navTarget = if (trip.status == "in_progress" && trip.destLat != null && trip.destLng != null) {
-            trip.destLat to trip.destLng
+        val navTarget = if (trip.status == "in_progress" && destLat != null && destLng != null) {
+            destLat to destLng
         } else {
             trip.pickupLat to trip.pickupLng
         }
